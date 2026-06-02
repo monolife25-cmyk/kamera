@@ -285,12 +285,14 @@ const tefekkurBtn=document.getElementById('tefekkur-btn');
 const kameraBtn=document.getElementById('kamera-ac-btn');
 
 function anahtarKontrol(){
+  apiKurulumBolum.style.display='block';
   if(GEMINI_KEY&&GEMINI_KEY.startsWith('sk-or-')){
-    apiKurulumBolum.style.display='none';
     tefekkurBtn.disabled=false;
     kameraBtn.disabled=false;
+    apiDurum.className='api-durum ok';
+    apiDurum.textContent='Mevcut API anahtarı yüklü. Yeni bir anahtar eklemek için aşağıya yapıştırın.';
+    apiKeyGiris.value='';
   }else{
-    apiKurulumBolum.style.display='block';
     tefekkurBtn.disabled=true;
     kameraBtn.disabled=true;
     apiDurum.className='api-durum hata';
