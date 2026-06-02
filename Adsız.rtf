@@ -1,0 +1,640 @@
+{\rtf1\ansi\ansicpg1254\cocoartf2580
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset134 PingFangSC-Regular;\f2\fnil\fcharset178 GeezaPro;
+\f3\fnil\fcharset0 Menlo-Regular;\f4\fnil\fcharset0 AppleColorEmoji;\f5\fnil\fcharset77 ZapfDingbatsITC;
+}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <!DOCTYPE html>\
+<html lang="tr">\
+<head>\
+<meta charset="UTF-8">\
+<meta name="viewport" content="width=device-width, initial-scale=1.0">\
+<title>Sahife-i \'c2lem \'97 Tefekk\'fcr Motoru</title>\
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Amiri:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cormorant+SC:wght@400;600&display=swap" rel="stylesheet">\
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>\
+<style>\
+:root\{\
+  --bg:#04060f;--bg-card:rgba(13,18,34,0.78);--border:rgba(201,168,76,.25);\
+  --gold:#c9a84c;--gold-light:#e8cc80;--gold-dim:#7a5e28;\
+  --text:#e8d5a0;--text-mid:#b8a880;--text-soft:#8a8070;--text-faint:#4a4030;\
+\}\
+*\{margin:0;padding:0;box-sizing:border-box;\}\
+html,body\{min-height:100vh;overflow-x:hidden;\}\
+body\{background:var(--bg);font-family:'Cormorant Garamond',serif;color:var(--text);line-height:1.7;\}\
+#bg-canvas\{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none;\}\
+.sayfa\{position:relative;z-index:1;max-width:700px;margin:0 auto;padding:3rem 1.5rem 7rem;display:flex;flex-direction:column;align-items:center;gap:2.2rem;\}\
+@keyframes yukari\{from\{opacity:0;transform:translateY(22px);\}to\{opacity:1;transform:translateY(0);\}\}\
+@keyframes nefes\{0%,100%\{opacity:.2;transform:scale(.7);\}50%\{opacity:.9;transform:scale(1.2);\}\}\
+\
+.baslik-bolum\{text-align:center;animation:yukari 1s cubic-bezier(.22,.68,0,1.2) both;\}\
+.bismillah\{font-family:'Amiri',serif;font-size:2.1rem;color:var(--gold);margin-bottom:1rem;display:block;text-shadow:0 0 30px rgba(201,168,76,.4);\}\
+.baslik\{font-family:'Cinzel',serif;font-weight:700;font-size:clamp(1.6rem,5vw,2.4rem);color:var(--gold-light);letter-spacing:.22em;line-height:1.2;\}\
+.baslik-alt\{margin-top:.5rem;font-style:italic;font-size:.88rem;color:var(--text-soft);letter-spacing:.1em;\}\
+\
+.api-kurulum\{width:100%;background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.3);border-left:4px solid var(--gold);padding:1.6rem 1.8rem;animation:yukari 1.1s cubic-bezier(.22,.68,0,1.2) both;\}\
+.api-kurulum-baslik\{font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;\}\
+.api-adimlar\{display:flex;flex-direction:column;gap:.7rem;margin-bottom:1.1rem;\}\
+.api-adim\{display:flex;gap:.8rem;align-items:flex-start;font-size:.88rem;color:var(--text-mid);\}\
+.api-adim-no\{width:22px;height:22px;border-radius:50%;background:rgba(201,168,76,.2);border:1px solid rgba(201,168,76,.4);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:.65rem;color:var(--gold);flex-shrink:0;margin-top:.1rem;\}\
+.api-adim a\{color:var(--gold);text-decoration:underline;text-underline-offset:3px;\}\
+.api-input-satiri\{display:flex;gap:.6rem;margin-top:.4rem;\}\
+#api-key-giris\{flex:1;background:rgba(0,0,0,.5);border:1px solid rgba(201,168,76,.3);padding:.75rem 1rem;font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text);outline:none;letter-spacing:.05em;transition:border-color .2s;\}\
+#api-key-giris::placeholder\{color:var(--text-faint);font-style:italic;\}\
+#api-key-giris:focus\{border-color:var(--gold);\}\
+#api-kaydet-btn\{background:linear-gradient(135deg,var(--gold-dim),var(--gold));border:none;padding:0 1.3rem;cursor:pointer;font-family:'Cinzel',serif;font-size:.68rem;color:#0a0700;letter-spacing:.12em;text-transform:uppercase;font-weight:700;transition:opacity .2s;white-space:nowrap;\}\
+#api-kaydet-btn:hover\{opacity:.85;\}\
+.api-durum\{font-size:.8rem;margin-top:.6rem;font-style:italic;\}\
+.api-durum.ok\{color:#80cc88;\}\
+.api-durum.hata\{color:#e07060;\}\
+\
+.blur-card\{background:var(--bg-card);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--border);padding:1.6rem 1.8rem;width:100%;\}\
+.kaynak-metin\{font-style:italic;font-weight:300;font-size:.96rem;color:var(--text-mid);line-height:2;margin-bottom:.6rem;\}\
+.kaynak-imza\{font-size:.78rem;color:var(--text-faint);letter-spacing:.06em;\}\
+\
+.soru-rehberi\{width:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;\}\
+.soru-kart\{padding:.85rem 1rem;background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.2);border-top:2px solid var(--gold-dim);text-align:center;backdrop-filter:blur(8px);\}\
+.soru-kart-baslik\{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.17em;color:var(--gold);text-transform:uppercase;margin-bottom:.22rem;\}\
+.soru-kart-alt\{font-style:italic;font-size:.76rem;color:var(--text-faint);\}\
+\
+.giris-bolum\{width:100%;display:flex;flex-direction:column;align-items:center;gap:.9rem;\}\
+.giris-etiket\{font-size:.92rem;font-weight:300;color:var(--text-mid);letter-spacing:.04em;text-align:center;\}\
+.giris-satir\{display:flex;width:100%;max-width:520px;border:1px solid rgba(201,168,76,.35);background:rgba(0,0,0,.4);backdrop-filter:blur(8px);transition:border-color .25s,box-shadow .25s;\}\
+.giris-satir:focus-within\{border-color:var(--gold);box-shadow:0 0 20px rgba(201,168,76,.12);\}\
+#nesne-giris\{flex:1;border:none;outline:none;padding:.9rem 1.2rem;font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--text);background:transparent;letter-spacing:.04em;\}\
+#nesne-giris::placeholder\{color:var(--text-faint);font-style:italic;\}\
+#tefekkur-btn\{border:none;border-left:1px solid rgba(201,168,76,.25);background:linear-gradient(135deg,var(--gold-dim),var(--gold));padding:0 1.4rem;cursor:pointer;font-family:'Cinzel',serif;font-size:.68rem;color:#0a0700;letter-spacing:.12em;text-transform:uppercase;font-weight:700;transition:opacity .2s;white-space:nowrap;\}\
+#tefekkur-btn:hover\{opacity:.85;\}\
+#tefekkur-btn:disabled\{opacity:.3;cursor:default;\}\
+.kamera-btn\{width:100%;max-width:520px;padding:.72rem;background:rgba(201,168,76,.08);border:1px dashed rgba(201,168,76,.4);color:var(--gold);cursor:pointer;font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;transition:all .2s;backdrop-filter:blur(8px);\}\
+.kamera-btn:hover\{background:rgba(201,168,76,.15);border-color:var(--gold);\}\
+.kamera-btn:disabled\{opacity:.3;cursor:default;\}\
+\
+#kamera-ekrani\{display:none;width:100%;\}\
+#kamera-video\{width:100%;border:1px solid var(--border);background:#000;max-height:280px;object-fit:cover;\}\
+.kamera-butonlar\{display:flex;gap:.6rem;margin-top:.65rem;\}\
+.kamera-cek-btn\{flex:1;padding:.8rem;background:linear-gradient(135deg,var(--gold-dim),var(--gold));border:none;color:#0a0700;font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;font-weight:700;cursor:pointer;\}\
+.kamera-iptal-btn\{padding:.8rem 1.1rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);color:var(--text-soft);font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.1em;cursor:pointer;\}\
+\
+.yukleniyor\{display:flex;flex-direction:column;align-items:center;gap:1.2rem;padding:2.5rem;\}\
+.noktalar\{display:flex;gap:7px;\}\
+.nokta\{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:nefes 1.6s ease-in-out infinite;\}\
+.nokta:nth-child(2)\{animation-delay:.25s;\}.nokta:nth-child(3)\{animation-delay:.5s;\}\
+.yukleniyor-yazi\{font-style:italic;color:var(--text-soft);font-size:.88rem;letter-spacing:.07em;\}\
+.hata-kutu\{padding:1.2rem 1.6rem;background:rgba(200,80,40,.1);border:1px solid rgba(200,80,40,.3);border-left:3px solid #c85028;font-style:italic;color:#e0907a;font-size:.88rem;width:100%;\}\
+\
+#infografik-kapsayici\{display:none;width:100%;\}\
+.infografik\{width:100%;background:linear-gradient(160deg,#130e02 0%,#090604 100%);border:2px solid #8a6a28;position:relative;overflow:hidden;font-family:'Cormorant Garamond',serif;color:#f5edd8;\}\
+.infografik::before,.infografik::after\{content:'';position:absolute;width:65px;height:65px;border-color:#8a6a28;border-style:solid;z-index:2;pointer-events:none;\}\
+.infografik::before\{top:10px;left:10px;border-width:2px 0 0 2px;\}\
+.infografik::after\{bottom:10px;right:10px;border-width:0 2px 2px 0;\}\
+.inf-serit-ust\{height:4px;background:linear-gradient(90deg,transparent,#c9a84c,#e8cc80,#c9a84c,transparent);\}\
+.inf-serit-alt\{height:4px;background:linear-gradient(90deg,transparent,#7a5e28,#c9a84c,#7a5e28,transparent);\}\
+.inf-baslik-bolum\{text-align:center;padding:1.8rem 1.8rem 1.3rem;background:linear-gradient(180deg,rgba(201,168,76,.08) 0%,transparent 100%);border-bottom:1px solid rgba(201,168,76,.2);\}\
+.inf-bir\{font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:.35em;color:#c9a84c;opacity:.65;text-transform:uppercase;margin-bottom:.25rem;\}\
+.inf-nesne-adi\{font-family:'Cinzel',serif;font-size:clamp(2rem,6vw,3.4rem);font-weight:700;color:#f0d88a;letter-spacing:.12em;line-height:1;text-shadow:0 0 40px rgba(201,168,76,.35);margin-bottom:.2rem;\}\
+.inf-kelimesi\{font-family:'Cinzel',serif;font-size:.85rem;letter-spacing:.4em;color:#c9a84c;text-transform:uppercase;margin-bottom:.85rem;\}\
+.inf-ayet
+\f1 \'b8\'b2
+\f0 \{font-family:'Amiri',serif;font-style:italic;font-size:.96rem;color:rgba(245,237,216,.6);max-width:460px;margin:0 auto;line-height:1.8;\}\
+.inf-orta-sus\{text-align:center;padding:.5rem;color:#c9a84c;font-size:.78rem;letter-spacing:.4em;opacity:.4;\}\
+.inf-uc-kolon\{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid rgba(201,168,76,.2);\}\
+.inf-kolon\{padding:1.4rem 1.15rem;border-right:1px solid rgba(201,168,76,.15);\}\
+.inf-kolon:last-child\{border-right:none;\}\
+.inf-kolon-baslik-alani\{display:flex;align-items:center;gap:.5rem;margin-bottom:.95rem;padding-bottom:.7rem;border-bottom:1px solid rgba(201,168,76,.18);\}\
+.inf-kolon-numara\{width:25px;height:25px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:.7rem;font-weight:600;flex-shrink:0;\}\
+.k1 .inf-kolon-numara\{background:rgba(122,94,40,.3);border:1px solid rgba(201,168,76,.4);color:#e8cc80;\}\
+.k2 .inf-kolon-numara\{background:rgba(40,90,70,.3);border:1px solid rgba(80,160,120,.4);color:#80ccaa;\}\
+.k3 .inf-kolon-numara\{background:rgba(70,50,100,.3);border:1px solid rgba(130,100,180,.4);color:#b8a0e0;\}\
+.inf-kolon-baslik\{font-family:'Cinzel',serif;font-size:.66rem;letter-spacing:.1em;font-weight:600;text-transform:uppercase;line-height:1.3;\}\
+.k1 .inf-kolon-baslik\{color:#e8cc80;\}.k2 .inf-kolon-baslik\{color:#80ccaa;\}.k3 .inf-kolon-baslik\{color:#b8a0e0;\}\
+.inf-maddeler\{display:flex;flex-direction:column;gap:.68rem;\}\
+.inf-madde\{display:flex;gap:.5rem;align-items:flex-start;\}\
+.inf-madde-ikon\{width:21px;height:21px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem;font-size:.58rem;\}\
+.k1 .inf-madde-ikon\{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.3);\}\
+.k2 .inf-madde-ikon\{background:rgba(80,160,120,.12);border:1px solid rgba(80,160,120,.3);\}\
+.k3 .inf-madde-ikon\{background:rgba(130,100,180,.12);border:1px solid rgba(130,100,180,.3);\}\
+.inf-madde-metin\{font-size:.78rem;line-height:1.6;color:rgba(245,237,216,.82);\}\
+.inf-madde-metin strong\{display:block;color:rgba(245,237,216,.95);font-weight:600;font-size:.8rem;margin-bottom:.07rem;font-family:'Cormorant SC',serif;letter-spacing:.04em;\}\
+.inf-esma-bolum\{border-top:1px solid rgba(201,168,76,.2);padding:1.05rem 1.7rem;background:rgba(201,168,76,.04);\}\
+.inf-esma-baslik\{text-align:center;font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.28em;color:#c9a84c;text-transform:uppercase;margin-bottom:.85rem;opacity:.8;\}\
+.inf-esma-grid\{display:grid;grid-template-columns:repeat(4,1fr);gap:.55rem;\}\
+.inf-esma-kart\{text-align:center;padding:.6rem .4rem;background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.17);\}\
+.inf-esma-arapca\{font-family:'Amiri',serif;font-size:1.1rem;color:#e8cc80;display:block;margin-bottom:.15rem;\}\
+.inf-esma-latin\{font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.13em;color:#c9a84c;text-transform:uppercase;display:block;margin-bottom:.22rem;\}\
+.inf-esma-aciklama\{font-size:.68rem;color:rgba(245,237,216,.5);line-height:1.42;font-style:italic;\}\
+.inf-risale-bolum\{border-top:1px solid rgba(201,168,76,.22);padding:1.25rem 1.7rem 1.45rem;background:linear-gradient(180deg,rgba(201,168,76,.06) 0%,rgba(201,168,76,.02) 100%);\}\
+.inf-risale-baslik-satiri\{display:flex;align-items:center;gap:.8rem;margin-bottom:1.05rem;\}\
+.inf-risale-cizgi\{flex:1;height:1px;\}\
+.inf-risale-cizgi-sol\{background:linear-gradient(90deg,rgba(201,168,76,.4),transparent);\}\
+.inf-risale-cizgi-sag\{background:linear-gradient(90deg,transparent,rgba(201,168,76,.4));\}\
+.inf-risale-baslik\{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.22em;color:#c9a84c;text-transform:uppercase;white-space:nowrap;\}\
+.inf-risale-grid\{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;\}\
+.inf-risale-kart\{padding:.9rem 1.05rem;background:rgba(0,0,0,.3);border:1px solid rgba(201,168,76,.14);border-left:3px solid rgba(201,168,76,.38);position:relative;\}\
+.inf-risale-tirnak\{position:absolute;top:.38rem;right:.6rem;font-family:'Amiri',serif;font-size:1.5rem;color:rgba(201,168,76,.1);line-height:1;\}\
+.inf-risale-vecize\{font-style:italic;font-size:.82rem;line-height:1.72;color:rgba(245,237,216,.84);margin-bottom:.5rem;\}\
+.inf-risale-kaynak\{font-family:'Cinzel',serif;font-size:.57rem;letter-spacing:.1em;color:#c9a84c;text-transform:uppercase;opacity:.7;\}\
+.inf-risale-eser\{font-size:.67rem;color:rgba(201,168,76,.43);font-style:italic;display:block;margin-top:.1rem;\}\
+.inf-alt-bolum\{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid rgba(201,168,76,.2);\}\
+.inf-alt-kart\{padding:1.2rem 1.4rem;border-right:1px solid rgba(201,168,76,.14);\}\
+.inf-alt-kart:last-child\{border-right:none;\}\
+.inf-alt-kart-baslik\{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.22em;color:#c9a84c;text-transform:uppercase;margin-bottom:.7rem;opacity:.8;\}\
+.inf-vecize-metin\{font-style:italic;font-size:.9rem;line-height:1.9;color:rgba(245,237,216,.85);text-align:center;\}\
+.inf-dua-metin\{font-size:.8rem;line-height:1.82;color:rgba(245,237,216,.7);\}\
+.inf-son-bant\{background:rgba(201,168,76,.1);border-top:1px solid rgba(201,168,76,.22);padding:.8rem 1.7rem;text-align:center;\}\
+.inf-son-yazi\{font-style:italic;font-size:.8rem;color:rgba(245,237,216,.58);line-height:1.8;\}\
+.inf-son-amin\{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.25em;color:#c9a84c;margin-top:.28rem;\}\
+.inf-butonlar\{display:flex;gap:.65rem;margin-top:.95rem;flex-wrap:wrap;justify-content:center;\}\
+.inf-btn\{display:flex;align-items:center;gap:.4rem;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.28);padding:.48rem 1.1rem;cursor:pointer;font-family:'Cinzel',serif;font-size:.67rem;color:var(--text-mid);letter-spacing:.12em;text-transform:uppercase;transition:all .2s;backdrop-filter:blur(8px);\}\
+.inf-btn:hover\{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.15);\}\
+.inf-btn svg\{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;\}\
+.toast\{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(8px);background:rgba(8,6,1,.96);border:1px solid var(--gold);color:var(--text);padding:.6rem 1.3rem;font-style:italic;font-size:.86rem;letter-spacing:.05em;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;z-index:300;white-space:nowrap;backdrop-filter:blur(14px);\}\
+.toast.goster\{opacity:1;transform:translateX(-50%) translateY(0);\}\
+.alt-bilgi\{text-align:center;font-style:italic;font-size:.82rem;color:var(--text-faint);line-height:1.9;\}\
+\
+@media(max-width:600px)\{\
+  .sayfa\{padding:2rem 1rem 5rem;gap:1.8rem;\}\
+  .soru-rehberi\{grid-template-columns:1fr;\}\
+  .inf-uc-kolon\{grid-template-columns:1fr;\}\
+  .inf-kolon\{border-right:none;border-bottom:1px solid rgba(201,168,76,.15);\}\
+  .inf-esma-grid\{grid-template-columns:repeat(2,1fr);\}\
+  .inf-risale-grid\{grid-template-columns:1fr;\}\
+  .inf-alt-bolum\{grid-template-columns:1fr;\}\
+  .inf-alt-kart\{border-right:none;border-bottom:1px solid rgba(201,168,76,.15);\}\
+  .inf-nesne-adi\{font-size:1.9rem;\}\
+  .api-kurulum\{padding:1.2rem 1.2rem;\}\
+\}\
+</style>\
+</head>\
+<body>\
+<canvas id="bg-canvas"></canvas>\
+\
+<div class="sayfa">\
+\
+  <div class="baslik-bolum">\
+    <span class="bismillah">
+\f2 \'c8\'f6\'d3\'fa\'e3\'f6
+\f0  
+\f2 \'c7\'e1\'e1\'f3\'f8\'e5\'f6
+\f0  
+\f2 \'c7\'e1\'d1\'f3\'f8\'cd\'fa\'e3\'f3\'e4\'f6
+\f0  
+\f2 \'c7\'e1\'d1\'f3\'f8\'cd\'f6\'ed\'e3\'f6
+\f0 </span>\
+    <div class="baslik">SAH\uc0\u304 FE-\u304  \'c2LEM</div>\
+    <div class="baslik-alt">Risale-i Nur K\'fclliyat\uc0\u305  &nbsp;\'b7&nbsp; Tefekk\'fcr Motoru</div>\
+  </div>\
+\
+  <div class="api-kurulum" id="api-kurulum-bolum">\
+    <div class="api-kurulum-baslik">
+\f3 \uc0\u9881 
+\f0  &nbsp; \'dccretsiz API Anahtar\uc0\u305  Kurulumu</div>\
+    <div class="api-adimlar">\
+      <div class="api-adim">\
+        <div class="api-adim-no">1</div>\
+        <div><a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a> adresine gidin \'97 Google veya GitHub ile \'fccretsiz giri\uc0\u351  yap\u305 n.</div>\
+      </div>\
+      <div class="api-adim">\
+        <div class="api-adim-no">2</div>\
+        <div>"Create Key" butonuna t\uc0\u305 klay\u305 n. Kredi kart\u305  gerekmez. Gemini 2.0 Flash \'fccretsiz modeli kullan\u305 l\u305 r.</div>\
+      </div>\
+      <div class="api-adim">\
+        <div class="api-adim-no">3</div>\
+        <div><code style="color:var(--gold);font-size:.85em;">sk-or-...</code> ile ba\uc0\u351 layan anahtar\u305  a\u351 a\u287 \u305 ya yap\u305 \u351 t\u305 r\u305 n. Taray\u305 c\u305 n\u305 zda g\'fcvenle saklan\u305 r.</div>\
+      </div>\
+    </div>\
+    <div class="api-input-satiri">\
+      <input type="password" id="api-key-giris" placeholder="sk-or-... (OpenRouter anahtar\uc0\u305 n\u305 z)"/>\
+      <button id="api-kaydet-btn">Kaydet</button>\
+    </div>\
+    <div class="api-durum" id="api-durum"></div>\
+  </div>\
+\
+  <div class="blur-card">\
+    <div class="kaynak-metin">"Sahife-i \'e2lemin eb'\'e2d-\uc0\u305  v\'e2sias\u305 nda Nakka\u351 -\u305  Ezel\'ee'nin yazd\u305 \u287 \u305  silsile-i h\'e2dis\'e2t\u305 n sat\u305 rlar\u305 na hikmet nazar\u305 yla bak ve fikr-i hakikatle sar\u305 l. Ta ki mele-i \'e2l\'e2dan uzanan \u351 u sel\'e2sil-i res\'e2il seni \'e2l\'e2-y\u305  illiyy\'een-i tevh\'eede \'e7\u305 kars\u305 n."</div>\
+    <div class="kaynak-imza">\'97 Bedi\'fczzaman Said Nurs\'ee, Mesnevi-i Nuriye</div>\
+  </div>\
+\
+  <div class="soru-rehberi">\
+    <div class="soru-kart"><div class="soru-kart-baslik">Hikmet Nazar\uc0\u305 yla</div><div class="soru-kart-alt">Neden var?</div></div>\
+    <div class="soru-kart"><div class="soru-kart-baslik">Kudret & \uc0\u304 'caz</div><div class="soru-kart-alt">Nas\u305 l \'e7al\u305 \u351 \u305 yor?</div></div>\
+    <div class="soru-kart"><div class="soru-kart-baslik">Fikr-i Hakikatle</div><div class="soru-kart-alt">Kimin ad\uc0\u305 na?</div></div>\
+  </div>\
+\
+  <div class="giris-bolum">\
+    <div class="giris-etiket">Bir nesne yaz\uc0\u305 n veya kamerayla g\'f6sterin &mdash; Risale-i Nur \u305 \u351 \u305 \u287 \u305 nda tefekk\'fcr olu\u351 tural\u305 m</div>\
+    <div class="giris-satir">\
+      <input type="text" id="nesne-giris" placeholder="bal ar\uc0\u305 s\u305 , su, yaprak, g\'fcne\u351 , ate\u351 \'85" autocomplete="off" spellcheck="false"/>\
+      <button id="tefekkur-btn" disabled>Tefekk\'fcr Et</button>\
+    </div>\
+    <button class="kamera-btn" id="kamera-ac-btn" disabled>
+\f4 \uc0\u55357 \u56567 
+\f0  &nbsp; CANLI KAMERA \'97 NESNEYE BAKTIR</button>\
+  </div>\
+\
+  <div id="kamera-ekrani" class="blur-card" style="padding:1rem;">\
+    <video id="kamera-video" autoplay playsinline muted></video>\
+    <div class="kamera-butonlar">\
+      <button class="kamera-cek-btn" id="fotograf-cek-btn">
+\f4 \uc0\u10024 
+\f0  &nbsp; MANAYI S\'dcZ (Foto\uc0\u287 raf \'c7ek)</button>\
+      <button class="kamera-iptal-btn" id="kamera-kapat-btn">\uc0\u304 ptal</button>\
+    </div>\
+    <canvas id="kamera-canvas" style="display:none;"></canvas>\
+  </div>\
+\
+  <div id="sonuc-alan" style="width:100%;"></div>\
+  <div id="infografik-kapsayici"></div>\
+\
+  <div class="alt-bilgi">"Her \uc0\u351 ey Hak'tan gelir, Hak'a d\'f6ner."<br>K\'e2inattaki her varl\u305 k, Nakka\u351 -\u305  Ezel\'ee'nin bir mektubudur.</div>\
+</div>\
+\
+<div class="toast" id="toast"></div>\
+\
+<script>\
+(function()\{\
+  const canvas=document.getElementById('bg-canvas');\
+  const renderer=new THREE.WebGLRenderer(\{canvas,alpha:true,antialias:false\});\
+  renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));\
+  renderer.setSize(innerWidth,innerHeight);\
+  const scene=new THREE.Scene();\
+  const cam=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,.1,100);\
+  cam.position.z=5;\
+  const N=2000,pos=new Float32Array(N*3);\
+  for(let i=0;i<N;i++)\{\
+    const u=Math.random(),v=Math.random();\
+    const th=u*Math.PI*2,ph=Math.acos(2*v-1),r=2+Math.random()*2.5;\
+    pos[i*3]=r*Math.sin(ph)*Math.cos(th);\
+    pos[i*3+1]=r*Math.sin(ph)*Math.sin(th);\
+    pos[i*3+2]=r*Math.cos(ph);\
+  \}\
+  const geo=new THREE.BufferGeometry();\
+  geo.setAttribute('position',new THREE.BufferAttribute(pos,3));\
+  const mat=new THREE.PointsMaterial(\{size:.038,color:new THREE.Color('#c9a84c'),transparent:true,opacity:.55,sizeAttenuation:true,depthWrite:false,blending:THREE.AdditiveBlending\});\
+  const pts=new THREE.Points(geo,mat);\
+  scene.add(pts);\
+  let loading=false,t=0;\
+  window.PARTICLES=\{\
+    setLoading:v=>\{loading=v;\},\
+    setColor:k=>\{\
+      const kl=(k||'').toLowerCase();\
+      if(kl.includes('ate\uc0\u351 ')||kl.includes('g\'fcne\u351 ')||kl.includes('alev'))mat.color.set('#ff8833');\
+      else if(kl.includes('su')||kl.includes('deniz')||kl.includes('ya\uc0\u287 mur'))mat.color.set('#3399ff');\
+      else if(kl.includes('g\'fcl')||kl.includes('\'e7i\'e7ek')||kl.includes('bahar'))mat.color.set('#ff7799');\
+      else if(kl.includes('yaprak')||kl.includes('a\uc0\u287 a\'e7')||kl.includes('orman'))mat.color.set('#55cc88');\
+      else if(kl.includes('gece')||kl.includes('ay')||kl.includes('y\uc0\u305 ld\u305 z'))mat.color.set('#8899ff');\
+      else mat.color.set('#c9a84c');\
+    \}\
+  \};\
+  (function loop()\{\
+    requestAnimationFrame(loop);\
+    t+=.01;\
+    pts.rotation.y=loading?t*3.8:t*.07;\
+    pts.rotation.x=Math.sin(t*.18)*.12;\
+    mat.opacity=loading?.45+Math.sin(t*8)*.18:.52;\
+    renderer.render(scene,cam);\
+  \})();\
+  window.addEventListener('resize',()=>\{renderer.setSize(innerWidth,innerHeight);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();\});\
+\})();\
+\
+const LS_KEY='sahife_i_alem_or_key';\
+let GEMINI_KEY=localStorage.getItem(LS_KEY)||'';\
+\
+const apiKurulumBolum=document.getElementById('api-kurulum-bolum');\
+const apiKeyGiris=document.getElementById('api-key-giris');\
+const apiKaydetBtn=document.getElementById('api-kaydet-btn');\
+const apiDurum=document.getElementById('api-durum');\
+const tefekkurBtn=document.getElementById('tefekkur-btn');\
+const kameraBtn=document.getElementById('kamera-ac-btn');\
+\
+function anahtarKontrol()\{\
+  if(GEMINI_KEY&&GEMINI_KEY.startsWith('sk-or-'))\{\
+    apiKurulumBolum.style.display='none';\
+    tefekkurBtn.disabled=false;\
+    kameraBtn.disabled=false;\
+  \}else\{\
+    apiKurulumBolum.style.display='block';\
+    tefekkurBtn.disabled=true;\
+    kameraBtn.disabled=true;\
+    apiDurum.className='api-durum hata';\
+    apiDurum.textContent='L\'fctfen ge\'e7erli bir OpenRouter API anahtar\uc0\u305  girin.';\
+  \}\
+\}\
+\
+apiKaydetBtn.addEventListener('click',()=>\{\
+  const anahtar=apiKeyGiris.value.trim();\
+  if(anahtar.startsWith('sk-or-'))\{\
+    localStorage.setItem(LS_KEY,anahtar);\
+    GEMINI_KEY=anahtar;\
+    apiDurum.className='api-durum ok';\
+    apiDurum.textContent='Anahtar ba\uc0\u351 ar\u305 yla kaydedildi! Sayfa haz\u305 rlan\u305 yor...';\
+    setTimeout(()=>\{anahtarKontrol();\},1000);\
+  \}else\{\
+    apiDurum.className='api-durum hata';\
+    apiDurum.textContent='Hata: Anahtar "sk-or-" ile ba\uc0\u351 lamal\u305 d\u305 r.';\
+  \}\
+\});\
+\
+document.addEventListener('DOMContentLoaded',anahtarKontrol);\
+\
+const SP_INF=`Sen, Bedi\'fczzaman Said Nurs\'ee'nin Risale-i Nur K\'fclliyat\uc0\u305 'n\u305  derinlemesine \'f6z\'fcmsemi\u351  bir tefekk\'fcr rehberisin.\
+\
+R\uc0\u304 SALE-\u304  NUR METODOLOJ\u304 S\u304 :\
+\'95 S\'d6ZLER (33 S\'f6z): K\'e2inat\uc0\u305  mektup/kitap/ayna metaforuyla okuma. 1.S\'f6z (Bismillah), 10.S\'f6z (Ha\u351 ir), 20.S\'f6z (Tevhid delilleri), 22.S\'f6z (Tabiat\u305 n reddi), 32.S\'f6z (H\'fcrriyet).\
+\'95 MEKTUBAT (33 Mektup): 20.Mektup (k\'e2inat okuma anahtarlar\uc0\u305 ), 29.Mektup (melekler).\
+\'95 LEM'ALAR (33 Lem'a): \uc0\u304 hl\'e2s, \u351 \'fck\'fcr, sab\u305 r, tevekk\'fcl.\
+\'95 \uc0\u350 UALAR (15 \u350 ua): Tevhid ispatlar\u305 , Kur'an mucizesi.\
+\'95 MESNEV\uc0\u304 -\u304  NUR\u304 YE: K\'fclliyat\u305 n \'f6z\'fc. Sahife-i \'e2lem metaforu.\
+\'95 MUHAKEMAT, \uc0\u304 \u350 ARAT\'dcL-\u304 'CAZ, LAH\u304 KALAR: Ak\u305 l-iman, Kur'an i'caz\u305 .\
+TEMEL: Tesad\'fcf reddi \'95 Tabiat\'e7\uc0\u305 l\u305 k reddi \'95 C\'fcz'\'ee-k\'fcll\'ee ayn\u305  kalem \'95 3 delil (v\'fccud/vahdet/\u351 ehadet) \'95 Esm\'e2 tecellisi.\
+KAYNAK: "Sahife-i \'e2lemin eb'\'e2d-\uc0\u305  v\'e2sias\u305 nda Nakka\u351 -\u305  Ezel\'ee'nin yazd\u305 \u287 \u305  silsile-i h\'e2dis\'e2t\u305 n sat\u305 rlar\u305 na hikmet nazar\u305 yla bak ve fikr-i hakikatle sar\u305 l."\
+\
+SADECE JSON, ba\uc0\u351 ka hi\'e7bir \u351 ey:\
+\{"nesne_tam":"...","ayet":"...","neden":[\{"baslik":"...","aciklama":"..."\},\{"baslik":"...","aciklama":"..."\},\{"baslik":"...","aciklama":"..."\},\{"baslik":"...","aciklama":"..."\},\{"baslik":"...","aciklama":"..."\}],"nasil":[\{"baslik":"...","aciklama":"..."\},\{"baslik":"...","aciklama":"..."\},\{"baslik":"...","aciklama":"..."\},\{"baslik":"...","aciklama":"..."\},\{"baslik":"...","aciklama":"..."\}],"kimin":[\{"baslik":"...","aciklama":"..."\},\{"baslik":"...","aciklama":"..."\},\{"baslik":"...","aciklama":"..."\},\{"baslik":"...","aciklama":"..."\},\{"baslik":"...","aciklama":"..."\}],"esma":[\{"arapca":"...","latin":"...","aciklama":"..."\},\{"arapca":"...","latin":"...","aciklama":"..."\},\{"arapca":"...","latin":"...","aciklama":"..."\},\{"arapca":"...","latin":"...","aciklama":"..."\}],"vecize":"...","dua":"...","son_bant":"..."\}`;\
+\
+const SP_VEC=`Risale-i Nur K\'fclliyat\uc0\u305  uzman\u305 s\u305 n. SADECE JSON:\
+\{"vecizeler":[\{"metin":"...","kaynak_kisa":"...","kaynak_tam":"...","tema":"..."\},\{"metin":"...","kaynak_kisa":"...","kaynak_tam":"...","tema":"..."\},\{"metin":"...","kaynak_kisa":"...","kaynak_tam":"...","tema":"..."\},\{"metin":"...","kaynak_kisa":"...","kaynak_tam":"...","tema":"..."\}]\}\
+Nesneyle ilgili ger\'e7ek Risale-i Nur vecizelerini getir. Kaynak: eser + b\'f6l\'fcm.`;\
+\
+const SP_KAMERA=`Foto\uc0\u287 raftaki ana nesneyi TEK T\'fcrk\'e7e kelimeyle s\'f6yle. Sadece kelime, ba\u351 ka hi\'e7bir \u351 ey.`;\
+\
+async function geminiCagir(\{sistem,mesaj,gorsel=null,maxToken=2500\})\{\
+  if(!GEMINI_KEY)throw new Error("API anahtar\uc0\u305  bulunamad\u305 .");\
+  const messages=[];\
+  if(sistem)messages.push(\{role:'system',content:sistem\});\
+  if(gorsel)\{\
+    messages.push(\{role:'user',content:[\
+      \{type:'image_url',image_url:\{url:`data:image/jpeg;base64,$\{gorsel\}`\}\},\
+      \{type:'text',text:mesaj\}\
+    ]\});\
+  \}else\{\
+    messages.push(\{role:'user',content:mesaj\});\
+  \}\
+  \
+  // Taray\uc0\u305 c\u305  CORS engellerini \'f6nlemek ve OpenRouter standartlar\u305 yla tam uyum i\'e7in\
+  const res=await fetch('https://openrouter.ai/api/v1/chat/completions',\{\
+    method:'POST',\
+    headers:\{\
+      'Content-Type':'application/json',\
+      'Authorization':`Bearer $\{GEMINI_KEY\}`,\
+      'HTTP-Referer': window.location.origin,\
+      'X-Title':'Sahife-i Alem'\
+    \},\
+    body:JSON.stringify(\{\
+      model:'google/gemini-2.0-flash-exp:free',\
+      messages,\
+      max_tokens:maxToken,\
+      temperature:.7\
+    \})\
+  \});\
+  if(!res.ok)\{\
+    const err=await res.json().catch(()=>(\{\}));\
+    const msg=err?.error?.message||res.statusText;\
+    throw new Error('API hatas\uc0\u305 : '+msg);\
+  \}\
+  const data=await res.json();\
+  return data?.choices?.[0]?.message?.content||'';\
+\}\
+\
+function jsonTemizle(ham)\{\
+  return ham.replace(/^```(?:json)?\\s*/i,'').replace(/\\s*\
+```$/,'').trim();\
+\}\
+\
+const kameraEkrani=document.getElementById('kamera-ekrani');\
+const kameraVideo=document.getElementById('kamera-video');\
+const kameraCanvas=document.getElementById('kamera-canvas');\
+let kameraStream=null;\
+\
+document.getElementById('kamera-ac-btn').addEventListener('click',async()=>\{\
+  try\{\
+    kameraStream=await navigator.mediaDevices.getUserMedia(\{video:\{facingMode:'environment'\}\});\
+    kameraVideo.srcObject=kameraStream;\
+    kameraEkrani.style.display='block';\
+    document.getElementById('kamera-ac-btn').style.display='none';\
+    kameraEkrani.scrollIntoView(\{behavior:'smooth'\});\
+  \}catch(e)\{\
+    toastGoster('Kamera eri\uc0\u351 imi reddedildi veya cihaz bulunamad\u305 .');\
+    kameraKapat();\
+  \}\
+\});\
+\
+function kameraKapat()\{\
+  if(kameraStream)\{kameraStream.getTracks().forEach(t=>t.stop());kameraStream=null;\}\
+  kameraEkrani.style.display='none';\
+  document.getElementById('kamera-ac-btn').style.display='';\
+\}\
+document.getElementById('kamera-kapat-btn').addEventListener('click',kameraKapat);\
+\
+document.getElementById('fotograf-cek-btn').addEventListener('click',async()=>\{\
+  const ctx=kameraCanvas.getContext('2d');\
+  kameraCanvas.width=kameraVideo.videoWidth||640;\
+  kameraCanvas.height=kameraVideo.videoHeight||480;\
+  ctx.drawImage(kameraVideo,0,0,kameraCanvas.width,kameraCanvas.height);\
+  const b64=kameraCanvas.toDataURL('image/jpeg',.85).split(',')[1];\
+  kameraKapat();\
+  setYukleniyor('G\'f6r\'fcnt\'fc analiz ediliyor\'85');\
+  try\{\
+    const kelime=(await geminiCagir(\{sistem:SP_KAMERA,mesaj:'Bu foto\uc0\u287 raftaki nesneyi tek kelimeyle s\'f6yle.',gorsel:b64,maxToken:30\})).trim().split(/\\s+/)[0];\
+    if(!kelime)throw new Error();\
+    document.getElementById('nesne-giris').value=kelime;\
+    await tefekkurUret(kelime);\
+  \}catch(e)\{\
+    setHata('G\'f6r\'fcnt\'fc analiz edilemedi. L\'fctfen elle yaz\uc0\u305 n.<br><small>'+gv(String(e))+'</small>');\
+  \}\
+\});\
+\
+const nesneGiris=document.getElementById('nesne-giris');\
+const sonucAlan=document.getElementById('sonuc-alan');\
+const infKap=document.getElementById('infografik-kapsayici');\
+let sonData=null;\
+\
+async function tefekkurUret(hedef)\{\
+  const nesne=hedef||nesneGiris.value.trim();\
+  if(!nesne)\{nesneGiris.focus();return;\}\
+  if(!GEMINI_KEY)\{toastGoster('\'d6nce API anahtar\uc0\u305  girin.');return;\}\
+  PARTICLES.setLoading(true);\
+  PARTICLES.setColor(nesne);\
+  setYukleniyor('Risale-i Nur k\'fclliyat\uc0\u305  \u305 \u351 \u305 \u287 \u305 nda tefekk\'fcr haz\u305 rlan\u305 yor\'85');\
+  infKap.style.display='none';\
+  tefekkurBtn.disabled=true;\
+  try\{\
+    const [ham1,ham2]=await Promise.all([\
+      geminiCagir(\{sistem:SP_INF,mesaj:`Nesne: "$\{nesne\}"`,maxToken:2500\}),\
+      geminiCagir(\{sistem:SP_VEC,mesaj:`Nesne: "$\{nesne\}"`,maxToken:1000\})\
+    ]);\
+    let d,vd=\{vecizeler:[]\};\
+    try\{d=JSON.parse(jsonTemizle(ham1));\}catch(e)\{throw new Error('\uc0\u304 nfografik JSON hatas\u305 .');\}\
+    try\{vd=JSON.parse(jsonTemizle(ham2));\}catch(_)\{\}\
+    sonData=\{...d,risaleVecizeler:vd.vecizeler||[]\};\
+    sonucAlan.innerHTML='';\
+    PARTICLES.setLoading(false);\
+    renderInfografik(sonData);\
+  \}catch(e)\{\
+    setHata('Bir hata olu\uc0\u351 tu. L\'fctfen tekrar deneyin.<br><small>'+gv(String(e))+'</small>');\
+    PARTICLES.setLoading(false);\
+  \}\
+  tefekkurBtn.disabled=!GEMINI_KEY;\
+\}\
+\
+function setYukleniyor(yazi)\{\
+  sonucAlan.innerHTML=`<div class="yukleniyor"><div class="noktalar"><div class="nokta"></div><div class="nokta"></div><div class="nokta"></div></div><div class="yukleniyor-yazi">$\{yazi\}</div></div>`;\
+  infKap.style.display='none';\
+\}\
+function setHata(msg)\{\
+  sonucAlan.innerHTML=`<div class="hata-kutu">$\{msg\}</div>`;\
+  tefekkurBtn.disabled=!GEMINI_KEY;\
+\}\
+\
+function renderInfografik(d)\{\
+  const i1=['
+\f3 \uc0\u9878 
+\f0 ','
+\f4 \uc0\u55357 \u56385 
+\f0 ','
+\f4 \uc0\u55356 \u57151 
+\f0 ','
+\f4 \uc0\u55357 \u56475 
+\f0 ','
+\f3 \uc0\u9789 
+\f0 '];\
+  const i2=['
+\f4 \uc0\u55357 \u56620 
+\f0 ','
+\f3 \uc0\u9881 
+\f0 ','
+\f4 \uc0\u55356 \u57098 
+\f0 ','
+\f4 \uc0\u55356 \u57300 
+\f0 ','
+\f4 \uc0\u10024 
+\f0 '];\
+  const i3=['
+\f2 \'c7\'e1\'e1\'e5
+\f0 ','
+\f4 \uc0\u55357 \u56534 
+\f0 ','
+\f4 \uc0\u55358 \u56626 
+\f0 ','
+\f4 \uc0\u55357 \u56421 
+\f0 ','
+\f5 \uc0\u10084 
+\f0 '];\
+  const mH=(l,ik)=>(l||[]).map((m,i)=>`<div class="inf-madde"><div class="inf-madde-ikon">$\{ik[i]||'
+\f5 \uc0\u10022 
+\f0 '\}</div><div class="inf-madde-metin"><strong>$\{gv(m.baslik)\}.</strong>$\{gv(m.aciklama)\}</div></div>`).join('');\
+  const eH=(l)=>(l||[]).map(e=>`<div class="inf-esma-kart"><span class="inf-esma-arapca">$\{gv(e.arapca)\}</span><span class="inf-esma-latin">$\{gv(e.latin)\}</span><span class="inf-esma-aciklama">$\{gv(e.aciklama)\}</span></div>`).join('');\
+  const rH=(l)=>!l?.length?`<div style="text-align:center;padding:.8rem;font-style:italic;color:rgba(201,168,76,.3);font-size:.8rem;">\'97</div>`:`<div class="inf-risale-grid">$\{l.map(v=>`<div class="inf-risale-kart"><div class="inf-risale-tirnak">"</div><div class="inf-risale-vecize">$\{gv(v.metin)\}</div><div class="inf-risale-kaynak">$\{gv(v.kaynak_kisa||'')\}<span class="inf-risale-eser">$\{gv(v.kaynak_tam||'')\} \'b7 $\{gv(v.tema||'')\}</span></div></div>`).join('')\}</div>`;\
+\
+  infKap.innerHTML=`\
+  <div class="infografik">\
+    <div class="inf-serit-ust"></div>\
+    <div class="inf-baslik-bolum">\
+      <div class="inf-bir">\'97 Bir \'97</div>\
+      <div class="inf-nesne-adi">$\{gv((d.nesne_tam||'').toUpperCase())\}</div>\
+      <div class="inf-kelimesi">K E L \uc0\u304  M E S \u304 </div>\
+      <div class="inf-ayet">$\{gv(d.ayet||'')\}</div>\
+    </div>\
+    <div class="inf-orta-sus">
+\f5 \uc0\u10022 
+\f0  
+\f5 \uc0\u10087 
+\f0  
+\f5 \uc0\u10022 
+\f0 </div>\
+    <div class="inf-uc-kolon">\
+      <div class="inf-kolon k1"><div class="inf-kolon-baslik-alani"><div class="inf-kolon-numara">1</div><div><div class="inf-kolon-baslik">Neden?<br>Hikmet Nazar\uc0\u305 yla</div></div></div><div class="inf-maddeler">$\{mH(d.neden,i1)\}</div></div>\
+      <div class="inf-kolon k2"><div class="inf-kolon-baslik-alani"><div class="inf-kolon-numara">2</div><div><div class="inf-kolon-baslik">Nas\uc0\u305 l?<br>Kudret ve \u304 'caz</div></div></div><div class="inf-maddeler">$\{mH(d.nasil,i2)\}</div></div>\
+      <div class="inf-kolon k3"><div class="inf-kolon-baslik-alani"><div class="inf-kolon-numara">3</div><div><div class="inf-kolon-baslik">Kimin Ad\uc0\u305 na?<br>Fikr-i Hakikatle</div></div></div><div class="inf-maddeler">$\{mH(d.kimin,i3)\}</div></div>\
+    </div>\
+    <div class="inf-esma-bolum"><div class="inf-esma-baslik">Bu Varl\uc0\u305 kta Tecelli Eden Esm\'e2-i H\'fcsn\'e2</div><div class="inf-esma-grid">$\{eH(d.esma)\}</div></div>\
+    <div class="inf-risale-bolum">\
+      <div class="inf-risale-baslik-satiri">\
+        <div class="inf-risale-cizgi inf-risale-cizgi-sol"></div>\
+        <div class="inf-risale-baslik">
+\f5 \uc0\u10022 
+\f0  &nbsp; Risale-i Nur K\'fclliyat\uc0\u305 'ndan Nurlu Vecizeler &nbsp; 
+\f5 \uc0\u10022 
+\f0 </div>\
+        <div class="inf-risale-cizgi inf-risale-cizgi-sag"></div>\
+      </div>\
+      $\{rH(d.risaleVecizeler)\}\
+    </div>\
+    <div class="inf-alt-bolum">\
+      <div class="inf-alt-kart"><div class="inf-alt-kart-baslik">Derin Bir Vecize</div><div class="inf-vecize-metin">$\{gv(d.vecize||'')\}</div></div>\
+      <div class="inf-alt-kart"><div class="inf-alt-kart-baslik">Dua</div><div class="inf-dua-metin">$\{gv(d.dua||'')\}</div></div>\
+    </div>\
+    <div class="inf-son-bant"><div class="inf-son-yazi">$\{gv(d.son_bant||'')\}</div><div class="inf-son-amin">
+\f5 \uc0\u10022 
+\f0  &nbsp; \'c2m\'een &nbsp; 
+\f5 \uc0\u10022 
+\f0 </div></div>\
+    <div class="inf-serit-alt"></div>\
+  </div>\
+  <div class="inf-butonlar">\
+    <button class="inf-btn" onclick="paylasTefekkur()">\
+      <svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>\
+      Payla\uc0\u351 \
+    </button>\
+    <button class="inf-btn" onclick="anahtariSifirla()">\
+      <svg viewBox="0 0 24 24"><path d="M12 22C6.5 22 2 17.5 2 12S6.5 2 12 2s10 4.5 10 10"/><polyline points="12 6 12 12 16 14"/></svg>\
+      Anahtar De\uc0\u287 i\u351 tir\
+    </button>\
+    <button class="inf-btn" onclick="document.getElementById('nesne-giris').focus();document.getElementById('nesne-giris').select();">\
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>\
+      Yeni Nesne\
+    </button>\
+  </div>`;\
+\
+  infKap.style.display='block';\
+  setTimeout(()=>infKap.scrollIntoView(\{behavior:'smooth',block:'start'\}),120);\
+\}\
+\
+function anahtariSifirla()\{\
+  localStorage.removeItem(LS_KEY);\
+  GEMINI_KEY='';\
+  apiKeyGiris.value='';\
+  anahtarKontrol();\
+  document.getElementById('api-kurulum-bolum').scrollIntoView(\{behavior:'smooth'\});\
+  toastGoster('Anahtar silindi. Yeni anahtar girin.');\
+\}\
+\
+async function paylasTefekkur()\{\
+  if(!sonData)return;\
+  const d=sonData;\
+  const st=(a)=>(a||[]).map(m=>`\'95 $\{m.baslik\}: $\{m.aciklama\}`).join('\\n');\
+  const sv=(a)=>(a||[]).map(v=>`"$\{v.metin\}"\\n  \'97 $\{v.kaynak_tam\}`).join('\\n\\n');\
+  const tam=`
+\f5 \uc0\u10022 
+\f0  "$\{d.nesne_tam\}" Kelimesi \'97 Risale-i Nur I\uc0\u351 \u305 \u287 \u305 nda Tefekk\'fcr 
+\f5 \uc0\u10022 
+\f0 \\n\\n
+\f5 \uc0\u10102 
+\f0  NEDEN?\\n$\{st(d.neden)\}\\n\\n
+\f5 \uc0\u10103 
+\f0  NASIL?\\n$\{st(d.nasil)\}\\n\\n
+\f5 \uc0\u10104 
+\f0  K\uc0\u304 M\u304 N ADINA?\\n$\{st(d.kimin)\}\\n\\n
+\f5 \uc0\u10022 
+\f0  R\uc0\u304 SALE-\u304  NUR VEC\u304 ZELER\u304  
+\f5 \uc0\u10022 
+\f0 \\n$\{sv(d.risaleVecizeler)\}\\n\\nVEC\uc0\u304 ZE: $\{d.vecize||''\}\\nDUA: $\{d.dua||''\}\\n\\n\'97 Mesnevi-i Nuriye & Risale-i Nur K\'fclliyat\u305 `;\
+  if(navigator.share)\{try\{await navigator.share(\{title:`$\{d.nesne_tam\} Kelimesi`,text:tam\});return;\}catch(e)\{if(e.name==='AbortError')return;\}\}\
+  if(navigator.clipboard?.writeText)\{try\{await navigator.clipboard.writeText(tam);toastGoster('Metin panoya kopyaland\uc0\u305  
+\f5 \uc0\u10022 
+\f0 ');return;\}catch(_)\{\}\}\
+  try\{const ta=document.createElement('textarea');ta.value=tam;ta.style.cssText='position:fixed;top:-9999px;left:-9999px;opacity:0';document.body.appendChild(ta);ta.focus();ta.select();document.execCommand('copy');document.body.removeChild(ta);toastGoster('Metin panoya kopyaland\uc0\u305  
+\f5 \uc0\u10022 
+\f0 ');\}catch(_)\{toastGoster('Metni elle se\'e7ebilirsiniz.');\}\
+\}\
+\
+function toastGoster(m)\{const t=document.getElementById('toast');t.textContent=m;t.classList.add('goster');setTimeout(()=>t.classList.remove('goster'),2800);\}\
+function gv(s)\{return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');\}\
+\
+tefekkurBtn.addEventListener('click',()=>tefekkurUret());\
+nesneGiris.addEventListener('keydown',e=>\{if(e.key==='Enter')tefekkurUret();\});\
+</script>\
+</body>\
+</html>}
