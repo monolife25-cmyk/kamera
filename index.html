@@ -358,7 +358,7 @@ async function geminiCagir({sistem,mesaj,gorsel=null,maxToken=2500}){
       'X-Title':'Sahife-i Alem'
     },
     body:JSON.stringify({
-      model:'google/gemini-2.0-flash-exp:free',
+      model:'google/gemini-2.0-flash',
       messages,
       max_tokens:maxToken,
       temperature:.7
