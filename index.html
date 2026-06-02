@@ -6,6 +6,8 @@
 <title>Sahife-i Âlem — Tefekkür Motoru</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Amiri:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cormorant+SC:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.12.0/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.0/dist/mobilenet.min.js"></script>
 <style>
 :root{
   --bg:#04060f;--bg-card:rgba(13,18,34,0.78);--border:rgba(201,168,76,.25);
@@ -337,18 +339,31 @@ Nesneyle ilgili gerçek Risale-i Nur vecizelerini getir. Kaynak: eser + bölüm.
 
 const SP_KAMERA=`Fotoğraftaki ana nesneyi TEK Türkçe kelimeyle söyle. Sadece kelime, başka hiçbir şey.`;
 
+let mobilenetModel = null;
+async function getMobilenetModel(){
+  if(!mobilenetModel){
+    if(!window.mobilenet) throw new Error('Mobilenet yüklenemedi.');
+    mobilenetModel = await window.mobilenet.load();
+  }
+  return mobilenetModel;
+}
+
+async function siniflandirVeKelimeAl(canvas){
+  const model = await getMobilenetModel();
+  const img = new Image();
+  img.src = canvas.toDataURL('image/jpeg',0.85);
+  await img.decode();
+  const preds = await model.classify(img);
+  const top = preds?.[0]?.className || '';
+  if(!top) return '';
+  return top.split(',')[0].trim();
+}
+
 async function geminiCagir({sistem,mesaj,gorsel=null,maxToken=2500}){
   if(!GEMINI_KEY)throw new Error("API anahtarı bulunamadı.");
   const messages=[];
   if(sistem)messages.push({role:'system',content:sistem});
-  if(gorsel){
-    messages.push({role:'user',content:[
-      {type:'image_url',image_url:{url:`data:image/jpeg;base64,${gorsel}`}},
-      {type:'text',text:mesaj}
-    ]});
-  }else{
-    messages.push({role:'user',content:mesaj});
-  }
+  messages.push({role:'user',content:mesaj});
   
   // Tarayıcı CORS engellerini önlemek ve OpenRouter standartlarıyla tam uyum için
   const res=await fetch('https://openrouter.ai/api/v1/chat/completions',{
@@ -409,12 +424,11 @@ document.getElementById('fotograf-cek-btn').addEventListener('click',async()=>{
   kameraCanvas.width=kameraVideo.videoWidth||640;
   kameraCanvas.height=kameraVideo.videoHeight||480;
   ctx.drawImage(kameraVideo,0,0,kameraCanvas.width,kameraCanvas.height);
-  const b64=kameraCanvas.toDataURL('image/jpeg',.85).split(',')[1];
   kameraKapat();
   setYukleniyor('Görüntü analiz ediliyor…');
   try{
-    const kelime=(await geminiCagir({sistem:SP_KAMERA,mesaj:'Bu fotoğraftaki nesneyi tek kelimeyle söyle.',gorsel:b64,maxToken:30})).trim().split(/\s+/)[0];
-    if(!kelime)throw new Error();
+    const kelime = await siniflandirVeKelimeAl(kameraCanvas);
+    if(!kelime) throw new Error('Nesne tespit edilemedi.');
     document.getElementById('nesne-giris').value=kelime;
     await tefekkurUret(kelime);
   }catch(e){
